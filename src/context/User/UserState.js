@@ -20,15 +20,22 @@ const UserState = (props) => {
   const [state, dispatch] = useReducer(UserReducer, initialState);
 
   //funcion que nos traera una lista de usuarios para llenar users
+
   const getUsers = async () => {
     const res = await axios.get("https://reqres.in/api/users");
-    console.log(res)
+    dispatch({
+      type: "GET_USERS",
+      payload: res.data.data
+    })
   }
 
   //funcion que nos traera un objeto para llenar selectedUser
   const getProfile = async (id) => {
     const res = await axios.get("https://reqres.in/api/users" + id);
-    console.log(res)
+    dispatch({
+      type: "GET_PROFILE",
+      payload: res.data.data
+    })
   }
   //ahora en el return ejecutamos el UserContext para decirle que todos los componentes que pongamos dentro, van a poder acceder al estado y hacer uso de él . Dentro de UserContext tenemos que especificar que funciones queremos pasarle con el provider. En value especificamos a que van a poder acceder los componentes hijos
   return (
