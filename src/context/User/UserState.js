@@ -3,6 +3,7 @@ import { useReducer } from "react";
 import UserReducer from "./UserReducer"
 //importamos el UserContext
 import UserContext from "./UserContext";
+import axios from "axios";
 
 //este componente es el que contiene el estado
 const UserState = (props) => {
@@ -19,10 +20,16 @@ const UserState = (props) => {
   const [state, dispatch] = useReducer(UserReducer, initialState);
 
   //funcion que nos traera una lista de usuarios para llenar users
-  const getUsers = () => {}
+  const getUsers = async () => {
+    const res = await axios.get("https://reqres.in/api/users");
+    console.log(res)
+  }
 
   //funcion que nos traera un objeto para llenar selectedUser
-  const getProfile = () => {}
+  const getProfile = async (id) => {
+    const res = await axios.get("https://reqres.in/api/users" + id);
+    console.log(res)
+  }
   //ahora en el return ejecutamos el UserContext para decirle que todos los componentes que pongamos dentro, van a poder acceder al estado y hacer uso de él . Dentro de UserContext tenemos que especificar que funciones queremos pasarle con el provider. En value especificamos a que van a poder acceder los componentes hijos
   return (
     <UserContext.Provider value = {{
