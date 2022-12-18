@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { useReducer } from "react";
 import UserReducer from "./UserReducer"
+//importamos el UserContext
+import UserContext from "./UserContext";
 
 //este componente es el que contiene el estado
-const UserState = () => {
+const UserState = (props) => {
   //aqui vamos a definir el estado inicial
   const initialState = {
     users : [],
@@ -21,6 +23,17 @@ const UserState = () => {
 
   //funcion que nos traera un objeto para llenar selectedUser
   const getProfile = () => {}
+  //ahora en el return ejecutamos el UserContext para decirle que todos los componentes que pongamos dentro, van a poder acceder al estado y hacer uso de él . Dentro de UserContext tenemos que especificar que funciones queremos pasarle con el provider. En value especificamos a que van a poder acceder los componentes hijos
+  return (
+    <UserContext.Provider value = {{
+      users : state.users,
+      selectedUser : state.selectedUser,
+      getUsers,
+      getProfile 
+    }}>
+      {props.children}
+    </UserContext.Provider>
+  )
 }
 
 export default UserState;
